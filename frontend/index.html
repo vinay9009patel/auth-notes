@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Auth Notes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+  <h2 id="title">Login</h2>
+
+  <input id="name" placeholder="Full Name" style="display:none" />
+  <input id="email" placeholder="Email" />
+  <input id="password" type="password" placeholder="Password" />
+
+  <button id="mainBtn" onclick="mainAction()">Login</button>
+
+  <p class="toggle">
+    Don’t have an account?
+    <span onclick="toggle()">Register</span>
+  </p>
+</div>
+
+<div id="notesSection" class="card" style="display:none; margin-top: 20px;">
+  <h2>My Notes</h2>
+  <div class="input-group">
+    <input id="noteText" placeholder="Write a note..." />
+    <button onclick="addNote()">Add</button>
+  </div>
+  <div id="notesList"></div>
+  <button onclick="logout()" style="background: #ff4d4d; margin-top: 10px;">Logout</button>
+</div>
+
+ 
+<script src="script.js"></script>
+</body>
+</html>

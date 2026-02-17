@@ -1,0 +1,120 @@
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(90deg, #b096f8, #8564e2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.card {
+  width: 350px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.card h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.card input:focus {
+  outline: none;
+  border-color: #6a5acd;
+}
+
+.card button {
+  width: 100%;
+  padding: 12px;
+  background: #6a5acd;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.card button:hover {
+  background: #5748d6;
+}
+
+.toggle {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+}
+
+.toggle span {
+  color: #6a5acd;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#notesList {
+  margin-top: 20px;
+  text-align: left;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.note-item {
+  background: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 4px solid #6a5acd;
+}
+
+.note-item span {
+  font-size: 14px;
+  color: #444;
+  word-break: break-all;
+}
+
+.note-item button {
+  width: auto;
+  padding: 5px 10px;
+  font-size: 12px;
+  background: #ff4d4d;
+}
+
+.note-item button:hover {
+  background: #e60000;
+}
+
+.input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.input-group input {
+  margin-bottom: 0;
+}
+
+.input-group button {
+  width: 80px;
+}

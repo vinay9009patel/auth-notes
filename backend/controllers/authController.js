@@ -48,7 +48,7 @@ const login = async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET||"devsecret",
       { expiresIn: "1h" }
     );
 
@@ -63,6 +63,7 @@ const login = async (req, res) => {
     });
 
   } catch (err) {
+    console.error("REGISTER ERROR",err);
     res.status(500).json({ message: "Server error" });
   }
 };

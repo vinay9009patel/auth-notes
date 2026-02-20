@@ -1,121 +1,154 @@
-let isLogin = true;
-const API_URL = "http://localhost:3000/api";
+// ================= CONFIG =================
+const BASE_URL = "https://auth-notes-ez2q.onrender.com";
 
-/* ENTER KEY HANDLING */
-document.addEventListener("keydown", (e) => {
+// ================= DARK MODE =================
+const themeToggle = document.getElementById("themeToggle");
+
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+}
+
+themeToggle?.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  localStorage.setItem(
+    "theme",
+    document.body.classList.contains("dark") ? "dark" : "light"
+  );
+});
+
+// ================= REGISTER =================
+async function register() {
+  const email = document.getElementById("rEmail").value.trim();
+  const password = document.getElementById("rPass").value.trim();
+
+  if (!email || !password) {
+    alert("Email aur password bhar");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${BASE_URL}/api/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+    alert(data.message);
+  } catch (err) {
+    alert("Register error");
+  }
+}
+
+// ================= LOGIN =================
+async function login() {
+  const email = document.getElementById("lEmail").value.trim();
+  const password = document.getElementById("lPass").value.trim();
+
+  if (!email || !password) {
+    alert("Email aur password bhar");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${BASE_URL}/api/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+      alert("Login successful ✅");
+      loadNotes();
+    } else {
+      alert(data.message || "Login failed");
+    }
+  } catch (err) {
+    alert("Login error");
+  }
+}
+
+// ================= ADD NOTE =================
+async function addNote() {
+  const noteInput = document.getElementById("noteInput");
+  const text = noteInput.value.trim();
+
+  if (!text) return;
+
+  try {
+    await fetch(`${BASE_URL}/api/notes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token")
+      },
+      body: JSON.stringify({ text })
+    });
+
+    noteInput.value = "";
+    loadNotes();
+  } catch (err) {
+    alert("Note add error");
+  }
+}
+
+// ================= LOAD NOTES =================
+async function loadNotes() {
+  const list = document.getElementById("notesList");
+  list.innerHTML = "";
+
+  try {
+    const res = await fetch(`${BASE_URL}/api/notes`, {
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
+    });
+
+    const notes = await res.json();
+
+    notes.forEach(note => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        ${note.text}
+        <button onclick="deleteNote('${note._id}')">❌</button>
+      `;
+      list.appendChild(li);
+    });
+  } catch (err) {
+    alert("Load notes error");
+  }
+}
+
+// ================= DELETE NOTE =================
+async function deleteNote(id) {
+  try {
+    await fetch(`${BASE_URL}/api/notes/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: localStorage.getItem("token")
+      }
+    });
+    loadNotes();
+  } catch (err) {
+    alert("Delete error");
+  }
+}
+
+// ================= ENTER KEY SUPPORT =================
+document.addEventListener("keydown", e => {
   if (e.key === "Enter") {
-    if (document.getElementById("notesSection").style.display === "block") {
+    if (document.activeElement.id === "noteInput") {
       addNote();
     } else {
-      mainAction();
+      login();
     }
   }
 });
 
-/* TOGGLE LOGIN / REGISTER */
-function toggle() {
-  isLogin = !isLogin;
-  document.getElementById("title").innerText = isLogin ? "Login" : "Register";
-  document.getElementById("mainBtn").innerText = isLogin ? "Login" : "Register";
-  document.getElementById("name").style.display = isLogin ? "none" : "block";
-}
-
-/* LOGIN / REGISTER */
-async function mainAction() {
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  if (!email || !password || (!isLogin && !name)) {
-    return alert("Fill all fields");
-  }
-
-  const body = isLogin ? { email, password } : { name, email, password };
-  const endpoint = isLogin ? "/auth/login" : "/auth/register";
-
-  const res = await fetch(API_URL + endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-
-  const data = await res.json();
-  if (!res.ok) return alert(data.message);
-
-  if (data.token) {
-    localStorage.setItem("token", data.token);
-    showNotes();
-  } else {
-    toggle();
-  }
-}
-
-/* SHOW NOTES */
-function showNotes() {
-  document.querySelector(".card").style.display = "none";
-  document.getElementById("notesSection").style.display = "block";
-  fetchNotes();
-}
-
-/* FETCH NOTES */
-async function fetchNotes() {
-  const token = localStorage.getItem("token");
-  const res = await fetch(`${API_URL}/notes`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const notes = await res.json();
-
-  const list = document.getElementById("notesList");
-  list.innerHTML = "";
-
-  notes.forEach(note => {
-    const div = document.createElement("div");
-    div.className = "note-item";
-    div.innerHTML = `
-      <span>${note.text}</span>
-      <button onclick="deleteNote('${note._id}')">Delete</button>
-    `;
-    list.appendChild(div);
-  });
-}
-
-/* ADD NOTE */
-async function addNote() {
-  const text = document.getElementById("noteText").value;
-  if (!text) return;
-
-  const token = localStorage.getItem("token");
-
-  await fetch(`${API_URL}/notes`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ text }),
-  });
-
-  document.getElementById("noteText").value = "";
-  fetchNotes();
-}
-
-/* DELETE NOTE */
-async function deleteNote(id) {
-  const token = localStorage.getItem("token");
-  await fetch(`${API_URL}/notes/${id}`, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  fetchNotes();
-}
-
-/* LOGOUT */
-function logout() {
-  localStorage.removeItem("token");
-  location.reload();
-}
-
-/* DARK MODE */
-function toggleTheme() {
-  document.body.classList.toggle("dark");
+// ================= AUTO LOAD NOTES =================
+if (localStorage.getItem("token")) {
+  loadNotes();
 }

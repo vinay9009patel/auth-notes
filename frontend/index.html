@@ -7,39 +7,41 @@
 </head>
 <body>
 
-<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  <!-- DARK MODE TOGGLE -->
+  <button id="darkBtn">🌙 Dark Mode
+    
+  </button>
 
-<!-- AUTH CARD -->
-<div class="card">
-  <h2 id="title">Login</h2>
+  <!-- AUTH CARD -->
+  <div class="card" id="authCard">
+    <h2 id="title">Login</h2>
 
-  <input id="name" type="text" placeholder="Name" style="display:none" />
-  <input id="email" type="email" placeholder="Email" />
-  <input id="password" type="password" placeholder="Password" />
+    <input type="text" id="name" placeholder="Name" style="display:none" />
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
 
-  <button id="mainBtn">Login</button>
+    <button onclick="mainAction()" id="mainBtn">Login</button>
 
-  <p class="toggle-text">
-    Don't have an account?
-    <a href="#" onclick="toggle()">Register</a>
-  </p>
-</div>
-
-<!-- NOTES -->
-<div id="notesSection" style="display:none;">
-  <div class="notes-header">
-    <h2>My Notes</h2>
-    <button onclick="logout()">Logout</button>
+    <p id="toggleText">
+      Don't have an account?
+      <span onclick="toggle()">Register</span>
+    </p>
   </div>
 
-  <div class="note-input">
-    <input id="noteText" placeholder="Write a note..." />
-    <button onclick="addNote()">Add</button>
+  <!-- NOTES SECTION -->
+  <div id="notesSection" style="display:none">
+    <h2>Your Notes</h2>
+
+    <div class="note-input">
+      <input type="text" id="noteText" placeholder="Write a note" />
+      <button onclick="addNote()">Add</button>
+    </div>
+
+    <div id="notesList"></div>
+
+    <button class="logout" onclick="logout()">Logout</button>
   </div>
 
-  <div id="notesList"></div>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

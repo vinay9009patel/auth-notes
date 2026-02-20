@@ -1,139 +1,143 @@
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
+/* ---------- BASE ---------- */
 body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-family: Arial, sans-serif;
+  background-color: #fff4f4;
+  color: #000;
+  transition: background-color 0.3s, color 0.3s;
+  margin: 0;
+  padding: 0;
 }
 
-/* THEME BUTTON */
-.theme-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  border: none;
-  background: #fff;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-/* CARD */
-.card {
-  width: 320px;
-  background: #fff;
-  padding: 25px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+/* ---------- HEADER ---------- */
+.header {
   text-align: center;
+  margin-top: 20px;
 }
 
-.card h2 {
-  margin-bottom: 15px;
-}
-
-.card input {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-.card button {
-  width: 100%;
-  padding: 10px;
-  background: #6c5ce7;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.toggle-text {
-  margin-top: 12px;
-}
-
-.toggle-text a {
-  color: #6c5ce7;
-  cursor: pointer;
-}
-
-/* NOTES */
+/* ---------- CARD / BOX ---------- */
+.card,
 #notesSection {
-  width: 600px;
-  background: #fff;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  background-color: #f9f9f9;
+  width: 340px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  margin: 20px auto;
 }
 
-.notes-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* ---------- INPUT ---------- */
+input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin: 6px 0;
 }
 
-.notes-header button {
-  background: #ff4d4d;
-  border: none;
+input:focus {
+  border-color: #4CAF50;
+}
+
+/* ---------- BUTTON ---------- */
+button {
+  background-color: #4CAF50;
   color: white;
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+ 
 }
 
+button:hover {
+  background-color: #43a047;
+}
+
+/* ---------- TOGGLE TEXT ---------- */
+#toggleText {
+  text-align: center;
+  margin-top: 10px;
+}
+
+#toggleText span {
+  color: #4CAF50;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* ---------- NOTES ---------- */
 .note-input {
   display: flex;
-  gap: 10px;
-  margin: 15px 0;
+  gap: 6px;
 }
 
 .note-input input {
   flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
 }
 
-.note-input button {
-  background: #6c5ce7;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
+#notesList {
+  margin-top: 10px;
 }
 
-.note-item {
-  background: #f1f1f1;
-  padding: 12px;
-  border-radius: 10px;
+.note {
+  background: #DCF8C6;
+  padding: 8px 10px;
+  margin: 6px 0;
+  border-radius: 6px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  align-items: center;
 }
 
-/* DARK MODE */
+/* ---------- LOGOUT ---------- */
+.logout {
+  background-color: crimson;
+  margin-top: 15px;
+}
+
+.logout:hover {
+  background-color: darkred;
+}
+
+/* ---------- DARK MODE ---------- */
 body.dark {
-  background: #121212;
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
 body.dark .card,
 body.dark #notesSection {
-  background: #1f1f1f;
-  color: white;
+  background-color: #1e1e1e;
 }
 
 body.dark input {
-  background: #2a2a2a;
-  color: white;
-  border: 1px solid #444;
+  background-color: #2a2a2a;
+  color: #fff;
+  border-color: #555;
 }
 
-body.dark .note-item {
-  background: #2a2a2a;
+body.dark .note {
+  background-color: #2e7d32;
+}
+
+/* ---------- DARK MODE BUTTON STYLE ---------- */
+body.dark button {
+  background: transparent;
+  color: #00ffd5;
+  border: 2px solid #00ffd5;
+  box-shadow:
+    0 0 5px #00ffd5,
+    0 0 15px rgba(0,255,213,0.6);
+}
+
+body.dark button:hover {
+  background-color: #00ffd5;
+  color: #000;
+  box-shadow:
+    0 0 10px #00ffd5,
+    0 0 25px #00ffd5,
+    0 0 50px rgba(0,255,213,0.9);
 }

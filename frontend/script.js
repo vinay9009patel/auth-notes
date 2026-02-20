@@ -1,8 +1,7 @@
 console.log("Script loaded ✅");
 
 let isLogin = true;
-const API_URL = "http://localhost:3000/api"; // backend local
-
+const API_URL = "https://auth-notes-ez2q.onrender.com/api";
 /* ---------- DARK MODE (PURE FRONTEND) ---------- */
 const darkBtn = document.getElementById("darkBtn");
 
